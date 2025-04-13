@@ -1,29 +1,28 @@
-const chatBody = document.querySelector(".chat-body");
-const messageInput = document.querySelector(".message-input");
+const chatBody = document.querySelector(".chatbody");
+const messageIn = document.querySelector(".message-input");
 const sendMessage = document.querySelector("#send-message");
-const fileInput = document.querySelector("#file-input");
-const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
-const fileCancelButton = fileUploadWrapper.querySelector("#file-cancel");
-const chatbotToggler = document.querySelector("#chatbot-toggler");
-const closeChatbot = document.querySelector("#close-chatbot");
+const Input = document.querySelector("#file-input");
+const UploadWrapper = document.querySelector(".file-upload-wrapper");
+const CancelButton = UploadWrapper.querySelector("#file-cancel");
+const chatToggler = document.querySelector("#chat-toggler");
+const closeChat = document.querySelector("#close-chatbot");
 
 // API
 const API_KEY = "AIzaSyCq3RgGIkABhCncPIO8BzIlakUerTUHrfs";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-// Initialize user message and file data
+
+
+//  chat history
+const chatHistory = [];
+const initialInputHeight = messageIn.scrollHeight;
+// Initialize message and  data
 const userData = {
   message: null,
   file: {
     data: null,
-    mime_type: null,
   },
 };
-
-//  chat history
-const chatHistory = [];
-const initialInputHeight = messageInput.scrollHeight;
-
 // Create message element with dynamic classes and return it
 const createMessageElement = (content, ...classes) => {
   const div = document.createElement("div");
@@ -36,23 +35,11 @@ const createMessageElement = (content, ...classes) => {
 const generateBotResponse = async (incomingMessageDiv) => {
   const messageElement = incomingMessageDiv.querySelector(".message-text");
 
-  //user message to chat history
-  chatHistory.push({
-    role: "user",
-    parts: [{ text: userData.message }, ...(userData.file.data ? [{ inline_data: userData.file }] : [])],
-  });
+  
 
-  // API options
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: chatHistory,
-    }),
-  };
-
+  
   try {
-    // Fetch bot response from API
+    // Fetch response from API
     const response = await fetch(API_URL, requestOptions);
     const data = await response.json();
     if (!response.ok) throw new Error(data.error.message);
@@ -65,13 +52,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
       role: "model",
       parts: [{ text: apiResponseText }],
     });
-  } catch (error) {
-    // error in API response
-    console.log(error);
-    messageElement.innerText = error.message;
-    messageElement.style.color = "#ff0000";
-  } finally {
-    // Reset user's file data, removing thinking indicator and scroll chat to bottom
+  }  finally {
     userData.file = {};
     incomingMessageDiv.classList.remove("thinking");
     chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
@@ -81,10 +62,10 @@ const generateBotResponse = async (incomingMessageDiv) => {
 // Handle outgoing user messages
 const handleOutgoingMessage = (e) => {
   e.preventDefault();
-  userData.message = messageInput.value.trim();
-  messageInput.value = "";
-  messageInput.dispatchEvent(new Event("input"));
-  fileUploadWrapper.classList.remove("file-uploaded");
+  userData.message = messageIn.value.trim();
+  messageIn.value = "";
+  messageIn.dispatchEvent(new Event("input"));
+  UploadWrapper.classList.remove("file-uploaded");
 
   // display user message
   const messageContent = `<div class="message-text"></div>
@@ -100,9 +81,7 @@ const handleOutgoingMessage = (e) => {
     const messageContent = `<img src="chatassisstant.png" class="chatbot-logo" width="50" height="60" alt="chat logo">
           <div class="message-text">
             <div class="thinking-indicator">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
+             <p> Typing...</p>
             </div>
           </div>`;
 
@@ -113,52 +92,23 @@ const handleOutgoingMessage = (e) => {
   }, 600);
 };
 
-// Adjust input field height dynamically
-messageInput.addEventListener("input", () => {
-  messageInput.style.height = `${initialInputHeight}px`;
-  messageInput.style.height = `${messageInput.scrollHeight}px`;
-  document.querySelector(".chat-form").style.borderRadius = messageInput.scrollHeight > initialInputHeight ? "15px" : "32px";
-});
 
-// Handle Enter key press for sending messages
-messageInput.addEventListener("keydown", (e) => {
+messageIn.addEventListener("keydown", (e) => {
   const userMessage = e.target.value.trim();
   if (e.key === "Enter" && !e.shiftKey && userMessage && window.innerWidth > 768) {
     handleOutgoingMessage(e);
   }
 });
 
-// Handle file input change and preview the selected file
-fileInput.addEventListener("change", () => {
-  const file = fileInput.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    fileInput.value = "";
-    fileUploadWrapper.querySelector("img").src = e.target.result;
-    fileUploadWrapper.classList.add("file-uploaded");
-    const base64String = e.target.result.split(",")[1];
-
-   // Store file data in userData
-   userData.file = {
-    data: base64String,
-    mime_type: file.type,
-  };
-};
-
-reader.readAsDataURL(file);
-});
 
 //  file upload cancel
-fileCancelButton.addEventListener("click", () => {
+CancelButton.addEventListener("click", () => {
   userData.file = {};
   fileUploadWrapper.classList.remove("file-uploaded");
 });
 
 
-
 sendMessage.addEventListener("click", (e) => handleOutgoingMessage(e));
-document.querySelector("#file-upload").addEventListener("click", () => fileInput.click());
-closeChatbot.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+document.querySelector("#file-upload").addEventListener("click", () => Input.click());
+closeChat.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+chatToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
