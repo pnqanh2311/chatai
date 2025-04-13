@@ -1,0 +1,23 @@
+{
+  "name": "chatai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pnqanh2311/chatai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pnqanh2311/chatai/issues"
+  },
+  "homepage": "https://github.com/pnqanh2311/chatai#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
