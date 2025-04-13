@@ -13,16 +13,16 @@ const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-
 
 
 
-//  chat history
-const chatHistory = [];
-const initialInputHeight = messageIn.scrollHeight;
+
 // Initialize message and  data
 const userData = {
   message: null,
   file: {
     data: null,
   },
-};
+};//  chat history
+const chatHistory = [];
+const initialInputHeight = messageIn.scrollHeight;
 // Create message element with dynamic classes and return it
 const createMessageElement = (content, ...classes) => {
   const div = document.createElement("div");
