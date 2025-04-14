@@ -4,54 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your AI Assisstant</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <h1>    Welcome to Our Help Center!</h1>
     <p>Ask us anything with our AI Assisstant</p>
-    <button id="chat-toggler">
-      <span class="material-symbols-rounded">mode_comment</span>
-      <span class="material-symbols-rounded">close</span>
-
-    </button>
-
-    <div class="popup">
-      <div class="chat-header">
-        <div class="header-info">
-     
-          <img src="chatassisstant.png" class="chatbot-logo" width="50" height="60" alt="chat logo">
-          <h2 class="logo-text">Help Center</h2><p class="sub-header">AI Support • Online now</p>
-        </div>
-        <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
+    <div id="chatscreen">
+    <div class="chat-header">
+      <div class="header-info">
+        <img src="chatassisstant.png" class="chatbot-logo" width="50" height="60" alt="chat logo">
+        <h2 class="logo-text">Help Center</h2><p class="sub-header">AI Support • Online now</p>
       </div>
+    </div>
+    <div class="chatbody">
+      <div class="message bot-message">
+                  <img src="chatassisstant.png" class="chatbot-logo" width="50" height="60" alt="chat logo">
 
-      <!-- Chat Screen -->
-      <div class="chatbody">
-        <div class="message bot-message">
-                    <img src="chatassisstant.png" class="chatbot-logo" width="50" height="60" alt="chat logo">
-
-          <div class="message-text"> Welcome 👋  <br /> I am your AI Assisstant. How can I help you today? </div>
-        </div>
-      </div>
-
-      <!--Footer -->
-      <div class="chat-bottom">
-        <form action="#" class="chat-form">
-          <textarea placeholder="Write your message here..." class="message-input" required></textarea>
-          <div class="chat-controls">
-            <div class="file-upload-wrapper">
-              <input type="file" accept="image/*" id="file-input" hidden />
-              <img src="#" />
-              <button type="button" id="file-upload" class="material-symbols-rounded">attach_file</button>
-              <button type="button" id="file-cancel" class="material-symbols-rounded">close</button> 
-            </div>
-            <button type="submit" id="send-message" class="material-symbols-rounded">arrow_upward</button>
-          </div>
-        </form>
+        <div class="message-text"> Welcome 👋  <br /> I am your AI Assisstant. How can I help you today? </div>
       </div>
     </div>
 
+
+    <div class="chat-bottom">
+        <form action="#" class="chat-form">
+          <textarea placeholder="Write your message here..." class="message-input" required></textarea>
+          </div>
+          <button type="submit" id="send-message" >Send</button>
+        </form>
+      </div>
+    </div></div>
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
