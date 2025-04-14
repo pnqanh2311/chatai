@@ -127,14 +127,6 @@ p{
     scrollbar-color: transparent transparent;
   }
   
-  .chat-form .chat-controls {
-    gap: 3px;
-    height: 47px;
-    display: flex;
-    padding-right: 6px;
-    align-items: center;
-    align-self: flex-end;
-  }
   
    button {
     border: none;

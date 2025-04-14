@@ -5,7 +5,11 @@ const sendMessageButton = document.getElementById("send-message");
 // API Configuration
 const API_KEY = "AIzaSyCq3RgGIkABhCncPIO8BzIlakUerTUHrfs";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
+const userData = {
+    message: null,
+    file: {
+      data: null,
+    },}
 // Function to create message elements
 const createMessageElement = (content,... className) => {
     const div = document.createElement("div");
@@ -23,6 +27,8 @@ const handleOutgoingMessage = async () => {
     chatBody.appendChild(createMessageElement(userMessage, "user-message"));
     messageInput.value = "";
     chatBody.scrollTo(0, chatBody.scrollHeight); // Scroll to the bottom
+
+   
 
     // Fetch AI response
     try {
